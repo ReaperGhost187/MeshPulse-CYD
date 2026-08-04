@@ -1,0 +1,28 @@
+name: Compile Arduino sketch
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        display: [ili9341, st7789]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Install ESP32 core and libraries
+        run: |
+          arduino-cli config init
+          arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core install esp32:esp32@3.3.10 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli lib install "TFT_eSPI@2.5.43" "PubSubClient@2.8" "ArduinoJson@7.4.3"
+      - name: Add non-secret CI configuration
+        run: cp MeshPulse_CYD/secrets.h.example MeshPulse_CYD/secrets.h
+      - name: Select ST7789 dual-USB configuration
+        if: matrix.display == 'st7789'
+        run: cp MeshPulse_CYD/build_opt.dual-usb.h MeshPulse_CYD/build_opt.h
+      - name: Compile
+        run: arduino-cli compile --fqbn esp32:esp32:esp32s3 MeshPulse_CYD
