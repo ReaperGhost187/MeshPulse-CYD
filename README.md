@@ -30,9 +30,9 @@ The tested target is a CYD-class ESP32-S3 board with an 8 MB flash chip and a 2.
 | Display DC | 2 |
 | Display reset | -1 (shared reset) |
 | Backlight | 21 |
-| Touch CS | 33 |
+| Touch CS | 33 (not used by this firmware) |
 
-The display and touch controllers use separate SPI buses. `MeshPulse_CYD/build_opt.h` applies the TFT_eSPI configuration to the sketch and every compiled library source file.
+The current dashboard is display-only and does not initialize the touchscreen. `MeshPulse_CYD/build_opt.h` applies the display's TFT_eSPI configuration to the sketch and every compiled library source file.
 
 ## Requirements
 
