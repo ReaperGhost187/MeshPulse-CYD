@@ -60,8 +60,8 @@ These are the verified versions used by CI. Later compatible versions may also w
    - `MESHCORE_REPEATER` to the exact repeater identifier used in your MQTT topics.
 4. The default `build_opt.h` targets a USB-C ILI9341 board. For a dual-USB CYD using an ST7789 display, replace it with `build_opt.dual-usb.h`:
 
-   ```text
-   build_opt.dual-usb.h -> build_opt.h
+   ```sh
+   cp MeshPulse_CYD/build_opt.dual-usb.h MeshPulse_CYD/build_opt.h
    ```
 
 ## MQTT topics
@@ -133,6 +133,8 @@ Replace the template values before uploading to hardware. The GitHub Actions wor
 ## Security
 
 Never commit `MeshPulse_CYD/secrets.h`. If credentials are accidentally published, rotate the Wi-Fi and MQTT credentials immediately; deleting a later commit does not remove them from Git history.
+
+MeshPulse currently uses an unencrypted MQTT connection (`WiFiClient`, normally port 1883). Run it only on a trusted local network unless you add TLS support and certificate validation.
 
 ## License
 

@@ -246,7 +246,7 @@ void callback(char* topic, byte* payload, unsigned int len) {
 
 void initDisplay() {
   Serial.println("MeshPulse boot");
-  Serial.println("ESP32-2432S028 MeshPulse");
+  Serial.println("ESP32-S3 CYD MeshPulse");
 
   pinMode(TFT_BL, OUTPUT);
   digitalWrite(TFT_BL, TFT_BACKLIGHT_ON);
